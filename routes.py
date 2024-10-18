@@ -1,8 +1,8 @@
 from flask import request, jsonify
 from app import app, db
-from models import Plot, BusinessType, BusinessConfiguration, User  # Правильный импорт
+from models import Plot, BusinessType, BusinessConfiguration, User
 
-# Route to add a new plot
+# Добавление участка
 @app.route('/add_data_plot', methods=['POST'])
 def add_data_plot():
     data = request.get_json()
@@ -26,7 +26,7 @@ def add_data_plot():
 
     return jsonify({"message": "Участок успешно добавлен", "plot": plot.to_dict()}), 201
 
-# Route to add a new business type
+# Добавление типа бизнеса
 @app.route('/add_data_business_type', methods=['POST'])
 def add_data_business_type():
     data = request.get_json()
@@ -49,7 +49,7 @@ def add_data_business_type():
 
     return jsonify({"message": "Тип бизнеса успешно добавлен", "business_type": business_type.to_dict()}), 201
 
-# Route to add a new business configuration
+# Добавление конфига(пока не работает)
 @app.route('/add_business_configuration', methods=['POST'])
 def add_business_configuration():
     data = request.get_json()
@@ -70,18 +70,19 @@ def add_business_configuration():
         return jsonify({"error": str(e)}), 500
     return jsonify({'message': 'Configuration added successfully.'}), 201
 
-# Route to get all plots
+# Получение участков
 @app.route('/plots', methods=['GET'])
 def get_plots():
     plots = Plot.query.all()
     return jsonify([plot.to_dict() for plot in plots]), 200
 
-# Route to get all business types
+# Получение типов бизнеса
 @app.route('/business_types', methods=['GET'])
 def get_business_types():
     business_types = BusinessType.query.all()
     return jsonify([business_type.to_dict() for business_type in business_types]), 200
 
+# Создание админа
 @app.route('/api/add_admin', methods=['POST'])
 def add_admin():
     data = request.get_json()
@@ -105,6 +106,7 @@ def add_admin():
 
     return jsonify({"message": "Admin added successfully"}), 201
 
+# Вход под админом
 @app.route('/api/authenticate', methods=['POST'])
 def authenticate():
     data = request.get_json()
@@ -129,6 +131,7 @@ def authenticate():
     return jsonify({"success": False, "message": "Invalid credentials"}), 401
 
 
+# Добавление участка админом
 @app.route('/api/plots', methods=['POST'])
 def add_plot():
     data = request.get_json()

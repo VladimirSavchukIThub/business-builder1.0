@@ -64,7 +64,7 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   width: 100%;
-  max-width: 1200px; /* Максимальная ширина контейнера */
+  max-width: 1200px;
 }
 
 .plot-card {
@@ -77,13 +77,13 @@ export default {
 }
 
 .plot-card:hover {
-  transform: scale(1.05); /* Увеличение карточки при наведении */
+  transform: scale(1.05);
 }
 
 .plot-image {
   width: 100%;
-  height: 200px; /* Высота изображения */
-  object-fit: cover; /* Подгонка изображения под размеры карточки */
+  height: 200px;
+  object-fit: cover;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
@@ -94,6 +94,6 @@ export default {
 
 .plot-price {
   font-weight: bold;
-  color: #007bff; /* Цвет цены */
+  color: #007bff;
 }
 </style>

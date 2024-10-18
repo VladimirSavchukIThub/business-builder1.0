@@ -6,8 +6,8 @@ class Plot(db.Model):
     name = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(100), nullable=False)
     size = db.Column(db.String(50), nullable=False)
-    image_url = db.Column(db.String(200), nullable=True)  # Ссылка на изображение
-    price = db.Column(db.Float, nullable=False)  # Поле для цены участка
+    image_url = db.Column(db.String(200), nullable=True)
+    price = db.Column(db.Float, nullable=False)
 
     def to_dict(self):
         return {
@@ -15,22 +15,22 @@ class Plot(db.Model):
             "name": self.name,
             "location": self.location,
             "size": self.size,
-            "image_url": self.image_url,  # Возвращаем ссылку на изображение
-            "price": self.price  # Возвращаем цену участка
+            "image_url": self.image_url,
+            "price": self.price
         }
 
 class BusinessType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    image_url = db.Column(db.String(200), nullable=True)  # Поле для ссылки на изображение
-    description = db.Column(db.String(200), nullable=True)  # Поле для описания
+    image_url = db.Column(db.String(200), nullable=True)
+    description = db.Column(db.String(200), nullable=True)
 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
-            "image_url": self.image_url,  # Возвращаем ссылку на изображение
-            "description": self.description  # Возвращаем описание
+            "image_url": self.image_url,
+            "description": self.description
         }
 class BusinessConfiguration(db.Model):
     id = db.Column(db.Integer, primary_key=True)

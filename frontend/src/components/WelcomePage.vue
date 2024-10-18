@@ -178,7 +178,7 @@ export default {
 
 .image-container {
   width: 100%;
-  max-width: 800px; /* Limited width */
+  max-width: 800px;
   margin: 20px auto;
   overflow: hidden;
 }
