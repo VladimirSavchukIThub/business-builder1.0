@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор бизнеса</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Выберите участок и тип бизнеса</h1>
+
+    <!-- Форма выбора участка -->
+    <label for="plot-select">Участок:</label>
+    <select id="plot-select"></select>
+
+    <!-- Форма выбора типа бизнеса -->
+    <label for="business-type-select">Тип бизнеса:</label>
+    <select id="business-type-select"></select>
+
+    <!-- Кнопка для выбора -->
+    <button id="config-btn">Перейти к конфигуратору</button>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
