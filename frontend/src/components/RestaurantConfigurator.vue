@@ -23,7 +23,7 @@
     <!-- Модальное окно с формой -->
     <div v-if="showModal" class="modal">
       <div class="modal-content">
-        <h2>Итоговая цена: {{ totalPrice }} руб.</h2>
+        <h2>Итоговая цена: {{ totalPrice }} руб. + цена участка</h2>
         <form @submit.prevent="submitForm">
           <input type="text" v-model="customerName" placeholder="Имя" required />
           <input type="text" v-model="customerSurname" placeholder="Фамилия" required />
