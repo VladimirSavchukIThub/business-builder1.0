@@ -1,7 +1,8 @@
 <template>
   <div class="admin-page">
     <h1>Admin Panel</h1>
-    <div v-if="!authenticated">
+
+    <div v-if="!authenticated" class="login-container">
       <h2>Enter Username and Password</h2>
       <form @submit.prevent="checkCredentials">
         <input
@@ -21,7 +22,7 @@
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </div>
 
-    <div v-else>
+    <div v-else class="form-container">
       <h2>Добавить Участок</h2>
       <form @submit.prevent="addPlot">
         <input
@@ -82,16 +83,14 @@ export default {
   },
   methods: {
     async checkCredentials() {
-    console.log('Button clicked, attempting to authenticate...'); // Логируем нажатие кнопки
-    try {
-      const response = await this.$http.post('http://localhost:5000/api/authenticate', {
-        username: this.username,
-        password: this.password
-      });
-      console.log('Response:', response.data);
+      try {
+        const response = await this.$http.post('http://localhost:5000/api/authenticate', {
+          username: this.username,
+          password: this.password
+        });
         if (response.data.success) {
           this.authenticated = true;
-          this.errorMessage = ''; // Clear error message on successful authentication
+          this.errorMessage = '';
         } else {
           this.errorMessage = 'Неверные учетные данные';
         }
@@ -102,14 +101,13 @@ export default {
     async addPlot() {
       try {
         await this.$http.post('http://localhost:5000/api/plots', {
-            name: this.plotName,
-            location: this.plotLocation,
-            size: this.plotSize,
-            price: this.plotPrice,
-            image_url: this.plotImageUrl
+          name: this.plotName,
+          location: this.plotLocation,
+          size: this.plotSize,
+          price: this.plotPrice,
+          image_url: this.plotImageUrl
         });
         this.plotSuccessMessage = 'Участок добавлен успешно';
-        // Clear fields and messages
         this.plotName = '';
         this.plotLocation = '';
         this.plotSize = null;
@@ -118,7 +116,7 @@ export default {
         this.plotErrorMessage = '';
       } catch (error) {
         this.plotErrorMessage = 'Ошибка при добавлении участка. Попробуйте еще раз.';
-        this.plotSuccessMessage = ''; // Clear success message if there's an error
+        this.plotSuccessMessage = '';
       }
     }
   }
@@ -130,13 +128,76 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #f9f9f9;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.login-container, .form-container {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 .error {
   color: red;
+  margin-top: 10px;
+  font-size: 0.9em;
 }
 
 .success {
   color: green;
+  margin-top: 10px;
+  font-size: 0.9em;
 }
 </style>
