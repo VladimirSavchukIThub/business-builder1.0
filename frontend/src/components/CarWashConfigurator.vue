@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'CarWashConfigurator',
   data() {
@@ -71,7 +73,6 @@ export default {
     this.plotPrice = parseFloat(this.$route.query.plotPrice) || 0;
   },
   methods: {
-
     setPaymentMethod(method) {
       this.paymentMethod = method;
     },
@@ -81,18 +82,41 @@ export default {
     closeModal() {
       this.showModal = false;
     },
-    submitForm() {
+    async submitForm() {
+      // Проверка, что все поля заполнены
+      if (!this.customerName || !this.customerSurname || !this.customerPhone || !this.customerEmail) {
+        alert('Пожалуйста, заполните все поля формы.');
+        return;
+      }
+
       const customerData = {
+        business_type: 'Мойка самообслуживания',
         name: this.customerName,
         surname: this.customerSurname,
         phone: this.customerPhone,
         email: this.customerEmail,
+        totalPrice: this.totalPrice, // Добавим итоговую цену
       };
+
       console.log('Данные клиента:', customerData);
 
-      // Перенаправление на страницу спасибо
-      this.$router.push({ name: 'thank-you' });
+      try {
+        // Отправка данных на сервер для отправки письма
+        const response = await axios.post('http://localhost:5000/email/send-email', customerData);
 
+        // Если письмо отправлено успешно
+        if (response.status === 200) {
+          alert('Письмо отправлено!');
+          this.$router.push({ name: 'thank-you' }); // Перенаправление на страницу "Спасибо"
+        } else {
+          alert('Ошибка при отправке письма');
+        }
+      } catch (error) {
+        console.error(error);  // Выводим ошибку для отладки
+        alert('Произошла ошибка при отправке данных: ' + error.message);
+      }
+
+      // Закрытие модального окна и очистка полей формы
       this.closeModal();
       this.customerName = '';
       this.customerSurname = '';
